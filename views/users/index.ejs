@@ -5,6 +5,36 @@
 
   <a href="/users/new" class="btn btn-primary">New User</a>
 
+  <% if (users.length !== 0) { %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(user => { %>
+      <tr>
+        <td><a href="/users/<%= user.id %>"><%= user.id %></a></td>
+        <td><%= user.username %></td>
+        <td><%= user.email %></td>
+        <td>
+          <a href="/users/<%= user.id %>/edit" class="btn btn-primary">Edit</a>
+          <form action="/users/<%= user.id %>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <% } else { %>
+  <div>There are no users, create some!</div>
+  <% } %>
+
 </div>
 
 <% include ../partials/_footer %>

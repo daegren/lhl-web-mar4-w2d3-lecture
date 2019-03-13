@@ -10,7 +10,7 @@ app.set("view engine", "ejs");
 
 // Models
 
-const User = require("./lib/users");
+const Users = require("./lib/users");
 
 // Middleware
 
@@ -40,34 +40,54 @@ app.get("/users/new", (req, res) => {
 // POST /users (CREATE)
 app.post("/users", (req, res) => {
   // TODO: Fill this in
+  if (!req.body.username || !req.body.email) {
+    res.redirect("/users/new");
+    return;
+  }
+
+  const user = Users.create(req.body.username, req.body.email);
+
+  res.redirect(`/users/${user.id}`);
 });
 
 // GET /users (READ)
 app.get("/users", (req, res) => {
   // TODO: Fill this in
-  res.render("users/index");
+  const users = Users.all();
+  res.render("users/index", { users: users });
 });
 
 // GET /users/:id (READ)
 app.get("/users/:id", (req, res) => {
   // TODO: Fill this in
-  res.render("users/show");
+  const user = Users.find(req.params.id);
+  res.render("users/show", { user: user });
 });
 
 // GET /users/:id/edit (UPDATE)
 app.get("/users/:id/edit", (req, res) => {
   // TODO: Fill this in
-  res.render("users/edit");
+  const user = Users.find(req.params.id);
+  res.render("users/edit", { user: user });
 });
 
 // PUT /users/:id (UPDATE)
 app.put("/users/:id", (req, res) => {
   // TODO: Fill this in
+  if (!req.body.username || !req.body.email) {
+    res.redirect(`/users/${req.params.id}/edit`);
+    return;
+  }
+
+  Users.update(req.params.id, req.body.username, req.body.email);
+  res.redirect("/users");
 });
 
 // DELETE /users/:id (DELETE)
 app.delete("/users/:id", (req, res) => {
   // TODO: Fill this in
+  Users.delete(req.params.id);
+  res.redirect("/users");
 });
 
 // Boot server
