@@ -6,6 +6,12 @@ const PORT = process.env.PORT || 8080;
 
 const app = express();
 
+app.set("view engine", "ejs");
+
+// Models
+
+const User = require("./lib/users");
+
 // Middleware
 
 // Use the body parsing middleware to handle forms
@@ -20,7 +26,48 @@ app.use(methodOverride("_method"));
 // Add routes here
 
 app.get("/", (req, res) => {
-  res.send("Hello, World!");
+  res.render("home");
+});
+
+// CRUD Routes for users
+
+// GET /users/new (CREATE)
+app.get("/users/new", (req, res) => {
+  // TODO: Fill this in
+  res.render("users/new");
+});
+
+// POST /users (CREATE)
+app.post("/users", (req, res) => {
+  // TODO: Fill this in
+});
+
+// GET /users (READ)
+app.get("/users", (req, res) => {
+  // TODO: Fill this in
+  res.render("users/index");
+});
+
+// GET /users/:id (READ)
+app.get("/users/:id", (req, res) => {
+  // TODO: Fill this in
+  res.render("users/show");
+});
+
+// GET /users/:id/edit (UPDATE)
+app.get("/users/:id/edit", (req, res) => {
+  // TODO: Fill this in
+  res.render("users/edit");
+});
+
+// PUT /users/:id (UPDATE)
+app.put("/users/:id", (req, res) => {
+  // TODO: Fill this in
+});
+
+// DELETE /users/:id (DELETE)
+app.delete("/users/:id", (req, res) => {
+  // TODO: Fill this in
 });
 
 // Boot server
